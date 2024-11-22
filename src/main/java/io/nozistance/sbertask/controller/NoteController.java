@@ -3,11 +3,11 @@ package io.nozistance.sbertask.controller;
 import io.nozistance.sbertask.entity.Note;
 import io.nozistance.sbertask.service.NoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Controller
@@ -18,8 +18,11 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping
-    public String listNotes(Model model) {
-        model.addAttribute("notes", noteService.findAll());
+    public String listNotes(@RequestParam(defaultValue = "0") int page, Model model) {
+        Page<Note> notePage = noteService.findPaginatedAndSorted(page, 5);
+        model.addAttribute("notes", notePage.getContent());
+        model.addAttribute("page", page);
+        model.addAttribute("totalPages", notePage.getTotalPages());
         return "notes/list";
     }
 

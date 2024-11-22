@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sber-task
+  docker:
+    compose:
+      lifecycle-management: start_and_stop
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    password: secret
+    username: myuser

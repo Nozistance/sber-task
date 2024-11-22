@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class NoteService {
 
     @Transactional
     public Note save(Note note) {
+        note.setCreatedAt(OffsetDateTime.now());
         return noteRepository.save(note);
     }
 
